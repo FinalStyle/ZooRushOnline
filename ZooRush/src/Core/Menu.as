@@ -153,7 +153,6 @@ package Core
 					
 				case Keyboard.ENTER:
 				{
-					trace("entra")
 					if(menu==1)
 					{
 						if(menuOption==1)
@@ -261,13 +260,13 @@ package Core
 				{
 					case "MoveHero":
 						h.model.x = params.x;
+						h.model.y = params.y;
 						h.model.scaleX = params.scale;
 						break;
 					case "Jump":
 						h.fallSpeed=params.fallSpeedd;
 						h.isjumping=params.isjumpingg;
 					case "changeAnimation":
-						
 						h.changeAnimation(params.animName);
 					case "ThrowGranade":
 						h.model.mc_body.rotation = params.rotation;
@@ -305,6 +304,7 @@ package Core
 		{
 			trace("CONECTADO...");
 			mainlevel = new Level("MCLevel1", 6);
+			
 			me = mainlevel.addPlayers(client.data.name);
 			me.spawn(mainlevel.level.MC_spawn.x, mainlevel.level.MC_spawn.y, mainlevel.level);
 			

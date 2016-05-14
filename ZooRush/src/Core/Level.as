@@ -216,61 +216,7 @@ package Core
 			}
 			allPlayers.push(player);
 			playersCount++;
-			//playersCount=1;
-			//player.spawn(this.level.MC_spawn.x, this.level.MC_spawn.y, this.level);
-				/*for (var j:int = 0; j < playersCount; j++) 
-				{
-					if(j==0)
-					{
-						
-						
-					}
-					else if(j==1)
-					{
-						player = new RedPanda(Keyboard.UP, Keyboard.DOWN, Keyboard.RIGHT, Keyboard.LEFT, Keyboard.COMMA, Keyboard.M);
-						player.model.transform.colorTransform= new ColorTransform(1.35,1.66,1.77)
-						allPlayers.push(player);
-					}
-					else if(j==2)
-					{
-						player = new RedPanda(Keyboard.Y, Keyboard.H, Keyboard.J, Keyboard.G, Keyboard.K, Keyboard.L);
-						allPlayers.push(player);
-					}
-					else if(j==3)
-					{
-						player = new RedPanda(Keyboard.NUMPAD_8, Keyboard.NUMPAD_5, Keyboard.NUMPAD_6, Keyboard.NUMPAD_4, Keyboard.NUMPAD_7, Keyboard.NUMPAD_9);
-						allPlayers.push(player);
-					}
-					player.model.transform.colorTransform = new ColorTransform(0,0,115,1)
-					player.model.transform.colorTransform= new ColorTransform(2.55,2.06,0.88)
-					player.model.transform.colorTransform= new ColorTransform(1.69,2.32,2.55)
-					player.model.transform.colorTransform= new ColorTransform(1.69,1.92,2.05)
-				}*/
-				
-				
-				
-				/*for (var i:int = 0; i < allPlayers.length; i++) 
-				{
-					if(i==0)
-					{
-						allPlayers[i].spawn(this.level.MC_spawn.x, this.level.MC_spawn.y, this.level);
-					}
-					else if(i==1)
-					{
-						allPlayers[i].model.scaleX*=-1;
-						allPlayers[i].spawn(this.level.MC_spawn2.x, this.level.MC_spawn2.y, this.level);
-					}
-					else if(i==2)
-					{
-						allPlayers[i].spawn(this.level.MC_spawn.x+500, this.level.MC_spawn.y, this.level);
-					}
-					else if(i==3)
-					{
-						allPlayers[i].model.scaleX*=-1;
-						allPlayers[i].spawn(this.level.MC_spawn2.x-500, this.level.MC_spawn2.y, this.level);
-					}
-					getPlayerPositionFromLocalToGlobal(allPlayers[i]);
-				}*/
+			
 			return player;
 		}
 		public function victorySet():void

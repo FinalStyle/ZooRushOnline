@@ -8,6 +8,8 @@ package Core
 	import flash.geom.Point;
 	import flash.media.Sound;
 	
+	import net.Client;
+	
 	
 	public class Hero
 	{
@@ -77,7 +79,7 @@ package Core
 		public var jumpSound:Sound;
 		
 		
-		public function Hero(up:int, down:int, right:int, left:int, shoot:int, atk1:int, name:String)
+		public function Hero(name:String, up:int, down:int, right:int, left:int, shoot:int, atk1:int)
 		{
 			upKey=up;
 			downKey=down;
@@ -85,9 +87,9 @@ package Core
 			rightKey=right;
 			shootKey=shoot;
 			atk1Key=atk1;
-			
+			this.name = name;
 			Locator.mainStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown)
-			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, keyUp)			
+			Locator.mainStage.addEventListener(KeyboardEvent.KEY_UP, keyUp)	
 		}
 		public function Update():void
 		{
@@ -114,7 +116,10 @@ package Core
 					forceAppliedByGranade=20;
 				}
 			}
-			
+			if(Menu.client.data.name == this.name)
+			{
+				Menu.client.sendMessageTo("*", "MoveHero", {owner:Menu.client.data.name, x:model.x, y:model.y, scale:model.scaleX});
+			}		
 		}
 		public function fall():void
 		{
@@ -165,7 +170,7 @@ package Core
 			model.scaleX=1*direction;
 			canmove=true;
 			runtrigger=isjumping;
-			Menu.client.sendMessageTo("*", "MoveHero", {owner:Menu.client.data.name, x:model.x, scale:model.scaleX});
+			//Menu.client.sendMessageTo("*", "MoveHero", {owner:Menu.client.data.name, x:model.x, scale:model.scaleX});
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////Granade and Arrow Functions///////////////////////////////////////////////
@@ -298,7 +303,10 @@ package Core
 						
 						audioSelection.play(0);
 						audioSelection.volume=0.1;
-						Menu.client.sendMessageTo("*", "Jump", {owner:Menu.client.data.name, fallSpeedd:fallSpeed=-18, isjumpingg:isjumping});
+						if(Menu.client.data.name == this.name)
+						{
+							Menu.client.sendMessageTo("*", "Jump", {owner:Menu.client.data.name, fallSpeedd:fallSpeed=-18, isjumpingg:isjumping});
+						}
 					}
 					if (down&&canmove) 
 					{
@@ -436,10 +444,8 @@ package Core
 				{
 					left=false;
 					moviendoce=false;
-					trace(blockeodeanimacion);
 					if (!isjumping && !Level.gameEnded&&!blockeodeanimacion)
 					{
-						trace("idle")
 						changeAnimation(ANIM_IDLE);
 					}
 					break;
@@ -448,10 +454,8 @@ package Core
 				{
 					right=false;
 					moviendoce=false;
-					trace(blockeodeanimacion);
 					if (!isjumping && !Level.gameEnded&&!blockeodeanimacion)
 					{
-						trace("idle")
 						changeAnimation(ANIM_IDLE);
 					}
 					break;
