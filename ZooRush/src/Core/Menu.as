@@ -191,7 +191,7 @@ package Core
 							//mainlevel=new Level("MCLevel1", 2);
 							//me = mainlevel.addPlayers("theNigga");
 							client= new Client("theNigga" + Math.random());
-							client.connect("127.0.0.1", 8087);
+							client.connect("192.168.0.12", 8087);
 							client.addEventListener(Client.EVENT_CONNECTED, evConnected);
 							client.addEventListener(Client.EVENT_NEW_CLIENT, evNewClient);
 							client.addEventListener(Client.EVENT_GET_ALL_CLIENTS, evGetAllClient);
@@ -212,8 +212,16 @@ package Core
 						else if(menuOption==2)
 						{
 							Locator.mainStage.removeChild(menu2);
-							mainlevel=new Level("MCLevel2", 2);
-							Level.gamestarted=true;
+							//mainlevel=new Level("MCLevel2", 2);
+							//Level.gamestarted=true;
+							client= new Client("theNigga" + Math.random());
+							client.connect("192.168.0.12", 8087);
+							client.addEventListener(Client.EVENT_CONNECTED, evConnected2);
+							client.addEventListener(Client.EVENT_NEW_CLIENT, evNewClient);
+							client.addEventListener(Client.EVENT_GET_ALL_CLIENTS, evGetAllClient);
+							client.addEventListener(Client.EVENT_RECEIVE_MESSAGE, evReceiveMessage);
+							
+							
 							audioselection = new SoundController(aceptarsounds);
 							audioselection.play(0);
 							audioselection.volume=0.4;
@@ -251,6 +259,31 @@ package Core
 			}
 		}
 		
+		private function evConnected2():void
+		{
+			trace("CONECTADO...");
+			mainlevel = new Level("MCLevel2", 6);
+			
+			me = mainlevel.addPlayers(client.data.name);
+			me.spawn(mainlevel.level.MC_spawn.x, mainlevel.level.MC_spawn.y, mainlevel.level);
+			
+			Main.instance.stage.addEventListener(Event.ENTER_FRAME, evUpdate);
+			
+			client.getAllClient();
+		}
+		private function evConnected():void
+		{
+			trace("CONECTADO...");
+			mainlevel = new Level("MCLevel1", 6);
+			
+			me = mainlevel.addPlayers(client.data.name);
+			me.spawn(mainlevel.level.MC_spawn.x, mainlevel.level.MC_spawn.y, mainlevel.level);
+			
+			Main.instance.stage.addEventListener(Event.ENTER_FRAME, evUpdate);
+			
+			client.getAllClient();
+		}
+		
 		private function evReceiveMessage(message:String, params:Object):void
 		{
 			var h:Hero = allOthers[params.owner];
@@ -266,11 +299,12 @@ package Core
 					case "Jump":
 						h.fallSpeed=params.fallSpeedd;
 						h.isjumping=params.isjumpingg;
+						break;
 					case "changeAnimation":
 						h.changeAnimation(params.animName);
-					case "ThrowGranade":
-						h.model.mc_body.rotation = params.rotation;
-						h.throwGranade();
+						break;
+					case "throwGranade":
+						h.throwGranade(params.x, params.y, params.r, params.sX, mainlevel.level);
 						break;
 					
 					/*case "Dead":
@@ -300,18 +334,6 @@ package Core
 			allOthers[data.name] = h;
 		}
 		
-		private function evConnected():void
-		{
-			trace("CONECTADO...");
-			mainlevel = new Level("MCLevel1", 6);
-			
-			me = mainlevel.addPlayers(client.data.name);
-			me.spawn(mainlevel.level.MC_spawn.x, mainlevel.level.MC_spawn.y, mainlevel.level);
-			
-			Main.instance.stage.addEventListener(Event.ENTER_FRAME, evUpdate);
-			
-			client.getAllClient();
-		}
 		
 		protected function evUpdate(event:Event):void
 		{

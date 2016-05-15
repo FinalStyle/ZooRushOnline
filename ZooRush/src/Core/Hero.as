@@ -148,6 +148,8 @@ package Core
 			model.x=PosX;
 			model.y=PosY;
 			currentlvl = parent;
+			trace(parent);
+			trace(currentlvl);
 			model.MC_sideHitBox.alpha=0;
 			model.MC_botHitBox.alpha=0;
 			model.MC_HitBox.alpha=0;
@@ -174,11 +176,16 @@ package Core
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////Granade and Arrow Functions///////////////////////////////////////////////
-		public function throwGranade():void
+		public function throwGranade(posX:Number, posY:Number, rotation:Number, scaleX:int, level:MovieClip):void
 		{
 			
+			if(Menu.client.data.name==this.name)
+			{
+				Menu.client.sendMessageTo("*", "throwGranade", {owner:Menu.client.data.name, x:posX, y:posY, r:rotation, sX:scaleX, l:level});
+			}
+			trace(posX, posY, rotation, scaleX, level);
 			var granade:Granade;
-			granade = new Granade(model.x, model.y-10, pointingArrow.model.rotation, model.scaleX, currentlvl)
+			granade = new Granade(posX, posY, rotation, scaleX, level)
 			granades.push(granade);
 			throwingGranade=false;
 			
@@ -199,7 +206,7 @@ package Core
 		
 		protected function evdesblockeo(event:Event):void
 		{
-			throwGranade();
+			throwGranade(model.x, model.y-10, pointingArrow.model.rotation, model.scaleX, currentlvl);
 			blockeodeanimacion=false;
 		}
 		public function deleteArrowForThrowingGranade():void
@@ -409,7 +416,7 @@ package Core
 						
 						if (isjumping)
 						{
-							throwGranade();
+							throwGranade(model.x, model.y-10, pointingArrow.model.rotation, model.scaleX, currentlvl);
 							blockeodeanimacion=false;
 						}
 						else
