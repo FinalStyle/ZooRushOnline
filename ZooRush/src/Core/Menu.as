@@ -3,7 +3,6 @@ package Core
 	import Engine.Locator;
 	
 	import flash.display.MovieClip;
-	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.media.Sound;
@@ -191,7 +190,7 @@ package Core
 							//mainlevel=new Level("MCLevel1", 2);
 							//me = mainlevel.addPlayers("theNigga");
 							client= new Client("theNigga" + Math.random());
-							client.connect("192.168.0.12", 8087);
+							client.connect("186.18.110.42", 8087);
 							client.addEventListener(Client.EVENT_CONNECTED, evConnected);
 							client.addEventListener(Client.EVENT_NEW_CLIENT, evNewClient);
 							client.addEventListener(Client.EVENT_GET_ALL_CLIENTS, evGetAllClient);
@@ -215,7 +214,7 @@ package Core
 							//mainlevel=new Level("MCLevel2", 2);
 							//Level.gamestarted=true;
 							client= new Client("theNigga" + Math.random());
-							client.connect("192.168.0.12", 8087);
+							client.connect("186.18.110.42", 8087);
 							client.addEventListener(Client.EVENT_CONNECTED, evConnected2);
 							client.addEventListener(Client.EVENT_NEW_CLIENT, evNewClient);
 							client.addEventListener(Client.EVENT_GET_ALL_CLIENTS, evGetAllClient);
